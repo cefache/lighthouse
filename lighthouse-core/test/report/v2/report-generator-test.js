@@ -129,9 +129,9 @@ describe('ReportGeneratorV2', () => {
     });
 
     it('should inject the report JSON', () => {
-      const code = 'hax</script><script>console.log("pwned");%%LIGHTHOUSE_JAVASCRIPT%%';
+      const code = 'hax\u2028</script><script>console.log("pwned");%%LIGHTHOUSE_JAVASCRIPT%%';
       const result = new ReportGeneratorV2().generateReportHtml({code});
-      assert.ok(result.includes('"code":"hax'), 'injects the json');
+      assert.ok(result.includes('"code":"hax\\n'), 'injects the json');
       assert.ok(result.includes('\\u003c/script'), 'escapes HTML tags');
       assert.ok(result.includes('LIGHTHOUSE_JAVASCRIPT'), 'cannot be tricked');
     });
